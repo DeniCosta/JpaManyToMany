@@ -34,7 +34,7 @@ public class Controller {
 	}
 
 	public void cadastrarClasse(Classe classe) {
-	    EntityManagerFactory emf = Persistence.createEntityManagerFactory("nome_da_unidade_de_persistencia");
+	    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ManyToMany");
 	    EntityManager em = emf.createEntityManager();
 
 	    try {
@@ -62,7 +62,7 @@ public class Controller {
 	public void cadastrarProfessor(Professor professor) {
 	    try {
 	        //Persistência usando JPA/Hibernate
-	        EntityManagerFactory emf = Persistence.createEntityManagerFactory("nome_da_unidade_de_persistencia");
+	        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ManyToMany");
 	        EntityManager em = emf.createEntityManager();
 
 	        em.getTransaction().begin();
