@@ -1,5 +1,6 @@
 package br.com.jpa.entidades;
 
+
 import java.util.Scanner;
 
 public class ManytoMany {
@@ -8,6 +9,7 @@ public class ManytoMany {
  
         Scanner scanner = new Scanner(System.in);
         boolean continuar = true;
+        Controller controller = Controller.getInstance();
 
         while (continuar) {
             System.out.println("Escolha uma opção:");
@@ -22,44 +24,70 @@ public class ManytoMany {
             int opcao = scanner.nextInt();
 
             switch (opcao) {
-                case 1:
-                    // Opção 1 - Cadastrar Classe
-                    
-                    break;
+            
+            case 1:
+                // Opção 1 - Cadastrar classe
+                scanner.nextLine(); 
+                System.out.println("Digite o nome da classe:");
+                String nomeClasse = scanner.nextLine();
 
-                case 2:
-                    // Opção 2 - Cadastrar Professor
-                    
-                    break;
+                Classe novaClasse = new Classe();
+                novaClasse.setNome(nomeClasse);
 
-                case 3:
-                    // Opção 3 - Editar Professor
-                   
-                    break;
+                // Chama o método do controller para cadastrar a classe
+                controller.cadastrarClasse(novaClasse);
 
-                case 4:
-                    // Opção 4 - Listar todas as Classes
-                    
-                    break;
+                System.out.println("Classe cadastrada com sucesso!");
+                break;
 
-                case 5:
-                    // Opção 5 - Excluir Classe
-                    
-                    break;
 
-                case 6:
-                    // Opção 6 - Excluir Professor
-                    
-                    break;
+            case 2:
+                // Opção 2 - Cadastrar Professor
+                scanner.nextLine(); // 
+                System.out.println("Digite o nome do professor:");
+                String nomeProfessor = scanner.nextLine();
 
-                case 0:
-                    // Opção 0 - Sair
-                    continuar = false;
-                    break;
+                System.out.println("Digite o assunto do professor:");
+                String assuntoProfessor = scanner.nextLine();
 
-                default:
-                    System.out.println("Opção inválida. Por favor, escolha uma opção válida.");
-                    break;
+                Professor novoProfessor = new Professor();
+                novoProfessor.setNome(nomeProfessor);
+                novoProfessor.setAssunto(assuntoProfessor);
+
+                // Chame o método do controller para cadastrar o professor
+                controller.cadastrarProfessor(novoProfessor);
+
+                System.out.println("Professor cadastrado com sucesso!");
+                break;
+
+            case 3:
+                // Opção 3 - Editar Professor
+                // Lógica para editar um professor existente
+                break;
+
+            case 4:
+                // Opção 4 - Listar todas as Classes
+                // Lógica para listar todas as classes existentes
+                break;
+
+            case 5:
+                // Opção 5 - Excluir Classe
+                // Lógica para excluir uma classe existente
+                break;
+
+            case 6:
+                // Opção 6 - Excluir Professor
+                // Lógica para excluir um professor existente
+                break;
+
+            case 0:
+                // Opção 0 - Sair
+                continuar = false;
+                break;
+
+            default:
+                System.out.println("Opção inválida. Por favor, escolha uma opção válida.");
+                break;
             }
         }
 
