@@ -90,6 +90,16 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
+	
+	public void atribuirClasse() {
+		try {
+			// Lógica para listar todas as classes existentes
+			logger.log(Level.INFO, "Listagem de todas as classes realizada com sucesso!");
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Erro ao listar todas as classes:", e);
+			e.printStackTrace();
+		}
+	}
 
 	public void listarTodasAsClasses() {
 		try {

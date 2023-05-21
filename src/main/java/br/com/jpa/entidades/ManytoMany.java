@@ -15,10 +15,11 @@ public class ManytoMany {
             System.out.println("Escolha uma opção:");
             System.out.println("1 - Cadastrar Classe");
             System.out.println("2 - Cadastrar Professor");
-            System.out.println("3 - Editar Professor");
-            System.out.println("4 - Listar todas as Classes");
-            System.out.println("5 - Excluir Classe");
-            System.out.println("6 - Excluir Professor");
+            System.out.println("3 - Atribuir Classe a um Professor");
+            System.out.println("4 - Editar Professor");
+            System.out.println("5 - Listar todas as Classes");
+            System.out.println("6 - Excluir Classe");
+            System.out.println("7 - Excluir Professor");
             System.out.println("0 - Sair");
 
             int opcao = scanner.nextInt();
@@ -59,23 +60,28 @@ public class ManytoMany {
 
                 System.out.println("Professor cadastrado com sucesso!");
                 break;
-
+                
             case 3:
-                // Opção 3 - Editar Professor
+                // Opção 3 - atribuir classe
                 // Lógica para editar um professor existente
                 break;
 
             case 4:
+                // Opção 3 - Editar Professor
+                // Lógica para editar um professor existente
+                break;
+
+            case 5:
                 // Opção 4 - Listar todas as Classes
                 // Lógica para listar todas as classes existentes
                 break;
 
-            case 5:
+            case 6:
                 // Opção 5 - Excluir Classe
                 // Lógica para excluir uma classe existente
                 break;
 
-            case 6:
+            case 7:
                 // Opção 6 - Excluir Professor
                 // Lógica para excluir um professor existente
                 break;
