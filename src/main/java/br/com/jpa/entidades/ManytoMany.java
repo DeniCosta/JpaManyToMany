@@ -63,7 +63,7 @@ public class ManytoMany {
                 
             case 3:
                 // Opção 3 - atribuir classe
-                // Lógica para editar um professor existente
+                // Lógica para atribuir uma classe a um professor existente
                 break;
 
             case 4:

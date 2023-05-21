@@ -111,15 +111,6 @@ public class Controller {
 		}
 	}
 
-	public void excluirClasse() {
-		try {
-			// Lógica para excluir uma classe existente
-			logger.log(Level.INFO, "Classe excluída com sucesso!");
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, "Erro ao excluir classe:", e);
-			e.printStackTrace();
-		}
-	}
 
 	public void excluirProfessor() {
 		try {
