@@ -109,8 +109,9 @@ public class ManytoMany {
             case 0:
                 // Opção 0 - Sair
                 continuar = false;
+                System.out.println("Sessão encerrada!");
                 break;
-
+                
             default:
                 System.out.println("Opção inválida. Por favor, escolha uma opção válida.");
                 break;
