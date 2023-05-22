@@ -1,6 +1,7 @@
 package br.com.jpa.entidades;
 
 
+import java.util.List;
 import java.util.Scanner;
 
 public class ManytoMany {
@@ -18,8 +19,7 @@ public class ManytoMany {
             System.out.println("3 - Atribuir Classe a um Professor");
             System.out.println("4 - Editar Professor");
             System.out.println("5 - Listar todas as Classes");
-            System.out.println("6 - Excluir Classe");
-            System.out.println("7 - Excluir Professor");
+            System.out.println("6 - Excluir Professor");
             System.out.println("0 - Sair");
 
             int opcao = scanner.nextInt();
@@ -63,25 +63,45 @@ public class ManytoMany {
                 
             case 3:
                 // Opção 3 - atribuir classe
-                // Lógica para atribuir uma classe a um professor existente
-                break;
+                scanner.nextLine(); // Limpa o buffer do scanner
+                // Exibir lista de todos os registros de professores
+                List<Professor> professores = controller.listarTodosOsProfessores();
+                System.out.println("Professores registrados:");
+                for (Professor professor : professores) {
+                    System.out.println("ID: " + professor.getId() + ", Nome: " + professor.getNome());
+                }
+             // Solicita o id do professor
+                System.out.println("Digite o ID do professor:");
+                Long idProfessor = scanner.nextLong();
+                scanner.nextLine(); // Limpa o buffer do scanner
+                
+             // Exibir lista de todos os registros de classes
+                List<Classe> classes = controller.listarTodasAsClasses();
+                System.out.println("Classes registradas:");
+                for (Classe classe : classes) {
+                    System.out.println("ID: " + classe.getId() + ", Nome: " + classe.getNome());
+                }
+             // Solicita o id da classe
+                System.out.println("Digite o ID da classe:");
+                Long idClasse = scanner.nextLong();
+                
+             // Chame o método do controller para atribuir a classe ao professor
+                controller.atribuirClasse(idProfessor, idClasse);
 
+                System.out.println("Classe atribuída ao professor com sucesso!");
+                break;
             case 4:
-                // Opção 3 - Editar Professor
+                // Opção 4 - Editar Professor
                 // Lógica para editar um professor existente
                 break;
 
             case 5:
-                // Opção 4 - Listar todas as Classes
+                // Opção 5 - Listar todas as Classes
                 // Lógica para listar todas as classes existentes
+            	// O método já está pronto...só precisa fazer a lógica aqui
                 break;
 
             case 6:
-                // Opção 5 - Excluir Classe
-                // Lógica para excluir uma classe existente
-                break;
-
-            case 7:
                 // Opção 6 - Excluir Professor
                 // Lógica para excluir um professor existente
                 break;
