@@ -83,38 +83,38 @@ public class Controller {
 	}
 
 	public Professor editarProfessor(Long idProfessorEditar, String novoNome, String novoAssunto) {
-	    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ManyToMany");
-	    EntityManager em = emf.createEntityManager();
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("ManyToMany");
+		EntityManager em = emf.createEntityManager();
 
-	    try {
-	        em.getTransaction().begin();
+		try {
+			em.getTransaction().begin();
 
-	        Professor professor = em.find(Professor.class, idProfessorEditar);
+			Professor professor = em.find(Professor.class, idProfessorEditar);
 
-	        if (professor != null) {
-	            professor.setNome(novoNome);
-	            professor.setAssunto(novoAssunto);
+			if (professor != null) {
+				professor.setNome(novoNome);
+				professor.setAssunto(novoAssunto);
 
-	            em.getTransaction().commit();
-	            logger.log(Level.INFO, "Professor editado com sucesso!");
+				em.getTransaction().commit();
+				logger.log(Level.INFO, "Professor editado com sucesso!");
 
-	            return professor;
-	        } else {
-	            logger.log(Level.INFO, "Professor não encontrado.");
-	            return null;
-	        }
-	    } catch (Exception e) {
-	        logger.log(Level.SEVERE, "Erro ao editar professor:", e);
-	        e.printStackTrace();
-	        return null;
-	    } finally {
-	        if (em != null) {
-	            em.close();
-	        }
-	        if (emf != null) {
-	            emf.close();
-	        }
-	    }
+				return professor;
+			} else {
+				logger.log(Level.INFO, "Professor não encontrado.");
+				return null;
+			}
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Erro ao editar professor:", e);
+			e.printStackTrace();
+			return null;
+		} finally {
+			if (em != null) {
+				em.close();
+			}
+			if (emf != null) {
+				emf.close();
+			}
+		}
 	}
 
 	public List<Professor> listarTodosOsProfessores() {
