@@ -36,179 +36,203 @@ public class Controller {
 	}
 
 	public void cadastrarClasse(Classe classe) {
-	    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ManyToMany");
-	    EntityManager em = emf.createEntityManager();
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("ManyToMany");
+		EntityManager em = emf.createEntityManager();
 
-	    try {
-	        em.getTransaction().begin();
+		try {
+			em.getTransaction().begin();
 
-	        // Insere a classe no banco de dados
-	        em.persist(classe);
+			// Insere a classe no banco de dados
+			em.persist(classe);
 
-	        em.getTransaction().commit();
-	        logger.log(Level.INFO, "Classe cadastrada com sucesso!");
-	    } catch (Exception e) {
-	        if (em.getTransaction().isActive()) {
-	            em.getTransaction().rollback();
-	        }
+			em.getTransaction().commit();
+			logger.log(Level.INFO, "Classe cadastrada com sucesso!");
+		} catch (Exception e) {
+			if (em.getTransaction().isActive()) {
+				em.getTransaction().rollback();
+			}
 
-	        logger.log(Level.SEVERE, "Erro ao cadastrar classe:", e);
-	        e.printStackTrace();
-	    } finally {
-	        em.close();
-	        emf.close();
-	    }
+			logger.log(Level.SEVERE, "Erro ao cadastrar classe:", e);
+			e.printStackTrace();
+		} finally {
+			em.close();
+			emf.close();
+		}
 	}
-
 
 	public void cadastrarProfessor(Professor professor) {
-	    try {
-	        //Persistência usando JPA/Hibernate
-	        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ManyToMany");
-	        EntityManager em = emf.createEntityManager();
-
-	        em.getTransaction().begin();
-
-	        // Insere o professor no banco de dados
-	        em.persist(professor);
-
-	        em.getTransaction().commit();
-	        logger.log(Level.INFO, "Professor cadastrado com sucesso!");
-	        
-	        em.close();
-	        emf.close();
-	    } catch (Exception e) {
-	        logger.log(Level.SEVERE, "Erro ao cadastrar professor:", e);
-	        e.printStackTrace();
-	    }
-	}
-
-	public void editarProfessor() {
 		try {
-			// Lógica para editar um professor existente
-			logger.log(Level.INFO, "Professor editado com sucesso!");
+			// Persistência usando JPA/Hibernate
+			EntityManagerFactory emf = Persistence.createEntityManagerFactory("ManyToMany");
+			EntityManager em = emf.createEntityManager();
+
+			em.getTransaction().begin();
+
+			// Insere o professor no banco de dados
+			em.persist(professor);
+
+			em.getTransaction().commit();
+			logger.log(Level.INFO, "Professor cadastrado com sucesso!");
+
+			em.close();
+			emf.close();
 		} catch (Exception e) {
-			logger.log(Level.SEVERE, "Erro ao editar professor:", e);
+			logger.log(Level.SEVERE, "Erro ao cadastrar professor:", e);
 			e.printStackTrace();
 		}
 	}
-	
-	public List<Professor> listarTodosOsProfessores() {
-	    // Lógica para listar todos os registros de professores existentes
 
+	public Professor editarProfessor(Long idProfessorEditar, String novoNome, String novoAssunto) {
 	    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ManyToMany");
 	    EntityManager em = emf.createEntityManager();
-
-	    List<Professor> professores = null;
 
 	    try {
 	        em.getTransaction().begin();
 
-	        // Recupere todos os registros de professores do banco de dados
-	        TypedQuery<Professor> query = em.createQuery("SELECT p FROM Professor p", Professor.class);
-	        professores = query.getResultList();
+	        Professor professor = em.find(Professor.class, idProfessorEditar);
 
-	        em.getTransaction().commit();
-	    } catch (Exception e) {
-	        if (em.getTransaction().isActive()) {
-	            em.getTransaction().rollback();
+	        if (professor != null) {
+	            professor.setNome(novoNome);
+	            professor.setAssunto(novoAssunto);
+
+	            em.getTransaction().commit();
+	            logger.log(Level.INFO, "Professor editado com sucesso!");
+
+	            return professor;
+	        } else {
+	            logger.log(Level.INFO, "Professor não encontrado.");
+	            return null;
 	        }
-
-	        logger.log(Level.SEVERE, "Erro ao listar professores:", e);
+	    } catch (Exception e) {
+	        logger.log(Level.SEVERE, "Erro ao editar professor:", e);
 	        e.printStackTrace();
+	        return null;
 	    } finally {
-	        em.close();
-	        emf.close();
+	        if (em != null) {
+	            em.close();
+	        }
+	        if (emf != null) {
+	            emf.close();
+	        }
 	    }
+	}
 
-	    return professores;
+	public List<Professor> listarTodosOsProfessores() {
+		// Lógica para listar todos os registros de professores existentes
+
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("ManyToMany");
+		EntityManager em = emf.createEntityManager();
+
+		List<Professor> professores = null;
+
+		try {
+			em.getTransaction().begin();
+
+			// Recupere todos os registros de professores do banco de dados
+			TypedQuery<Professor> query = em.createQuery("SELECT p FROM Professor p", Professor.class);
+			professores = query.getResultList();
+
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			if (em.getTransaction().isActive()) {
+				em.getTransaction().rollback();
+			}
+
+			logger.log(Level.SEVERE, "Erro ao listar professores:", e);
+			e.printStackTrace();
+		} finally {
+			em.close();
+			emf.close();
+		}
+
+		return professores;
 	}
 
 	public List<Classe> listarTodasAsClasses() {
-	    // Lógica para listar todas as classes existentes
+		// Lógica para listar todas as classes existentes
 
-	    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ManyToMany");
-	    EntityManager em = emf.createEntityManager();
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("ManyToMany");
+		EntityManager em = emf.createEntityManager();
 
-	    List<Classe> classes = null;
+		List<Classe> classes = null;
 
-	    try {
-	        em.getTransaction().begin();
-
-	        // Recupere todas as classes do banco de dados
-	        TypedQuery<Classe> query = em.createQuery("SELECT c FROM Classe c", Classe.class);
-	        classes = query.getResultList();
-
-	        em.getTransaction().commit();
-	    } catch (Exception e) {
-	        if (em.getTransaction().isActive()) {
-	            em.getTransaction().rollback();
-	        }
-
-	        logger.log(Level.SEVERE, "Erro ao listar classes:", e);
-	        e.printStackTrace();
-	    } finally {
-	        em.close();
-	        emf.close();
-	    }
-
-	    return classes;
-	}
-	
-	public void atribuirClasse(Long idProfessor, Long idClasse) {
-	    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ManyToMany");
-	    EntityManager em = emf.createEntityManager();
-
-	    try {
-	        em.getTransaction().begin();
-
-	        // Recuperar o professor pelo ID
-	        Professor professor = em.find(Professor.class, idProfessor);
-
-	        // Recuperar a classe pelo ID
-	        Classe classe = em.find(Classe.class, idClasse);
-
-	        // Verificar se professor e classe existem
-	        if (professor != null && classe != null) {
-	            // Adicionar a classe ao conjunto de classes do professor
-	            List<Classe> classesDoProfessor = professor.getClasseSet();
-	            classesDoProfessor.add(classe);
-	            professor.setClasseSet(classesDoProfessor);
-	            em.merge(professor);
-
-	            // Atualizar o conjunto de professores da classe
-	            List<Professor> professoresDaClasse = classe.getProfessorSet();
-	            professoresDaClasse.add(professor);
-	            classe.setProfessorSet(professoresDaClasse);
-	            em.merge(classe);
-
-	            em.getTransaction().commit();
-	            logger.log(Level.INFO, "Classe atribuída ao professor com sucesso!");
-	        } else {
-	            logger.log(Level.WARNING, "Professor ou classe não encontrados. Atribuição não realizada.");
-	        }
-	    } catch (Exception e) {
-	        if (em.getTransaction().isActive()) {
-	            em.getTransaction().rollback();
-	        }
-
-	        logger.log(Level.SEVERE, "Erro ao atribuir classe ao professor:", e);
-	        e.printStackTrace();
-	    } finally {
-	        em.close();
-	        emf.close();
-	    }
-	}
-
-
-
-	public void excluirProfessor() {
 		try {
-			// Lógica para excluir um professor existente
-			logger.log(Level.INFO, "Professor excluído com sucesso!");
+			em.getTransaction().begin();
+
+			// Recupere todas as classes do banco de dados
+			TypedQuery<Classe> query = em.createQuery("SELECT c FROM Classe c", Classe.class);
+			classes = query.getResultList();
+
+			em.getTransaction().commit();
 		} catch (Exception e) {
-			logger.log(Level.SEVERE, "Erro ao excluir professor:", e);
+			if (em.getTransaction().isActive()) {
+				em.getTransaction().rollback();
+			}
+
+			logger.log(Level.SEVERE, "Erro ao listar classes:", e);
 			e.printStackTrace();
+		} finally {
+			em.close();
+			emf.close();
+		}
+
+		return classes;
+	}
+
+	public void atribuirClasse(Long idProfessor, Long idClasse) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("ManyToMany");
+		EntityManager em = emf.createEntityManager();
+
+		try {
+			em.getTransaction().begin();
+
+			// Recuperar o professor pelo ID
+			Professor professor = em.find(Professor.class, idProfessor);
+
+			// Recuperar a classe pelo ID
+			Classe classe = em.find(Classe.class, idClasse);
+
+			// Verificar se professor e classe existem
+			if (professor != null && classe != null) {
+				// Adicionar a classe ao conjunto de classes do professor
+				List<Classe> classesDoProfessor = professor.getClasseSet();
+				classesDoProfessor.add(classe);
+				professor.setClasseSet(classesDoProfessor);
+				em.merge(professor);
+
+				// Atualizar o conjunto de professores da classe
+				List<Professor> professoresDaClasse = classe.getProfessorSet();
+				professoresDaClasse.add(professor);
+				classe.setProfessorSet(professoresDaClasse);
+				em.merge(classe);
+
+				em.getTransaction().commit();
+				logger.log(Level.INFO, "Classe atribuída ao professor com sucesso!");
+			} else {
+				logger.log(Level.WARNING, "Professor ou classe não encontrados. Atribuição não realizada.");
+			}
+		} catch (Exception e) {
+			if (em.getTransaction().isActive()) {
+				em.getTransaction().rollback();
+			}
+
+			logger.log(Level.SEVERE, "Erro ao atribuir classe ao professor:", e);
+			e.printStackTrace();
+		} finally {
+			em.close();
+			emf.close();
+		}
+	}
+
+	public Professor buscarProfessorPorId(Long idProfessor) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("ManyToMany");
+		EntityManager em = emf.createEntityManager();
+
+		try {
+			// Busca o professor pelo ID
+			return em.find(Professor.class, idProfessor);
+		} finally {
+			em.close();
 		}
 	}
 }

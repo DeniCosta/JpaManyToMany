@@ -19,7 +19,6 @@ public class ManytoMany {
             System.out.println("3 - Atribuir Classe a um Professor");
             System.out.println("4 - Editar Professor");
             System.out.println("5 - Listar todas as Classes");
-            System.out.println("6 - Excluir Professor");
             System.out.println("0 - Sair");
 
             int opcao = scanner.nextInt();
@@ -92,20 +91,38 @@ public class ManytoMany {
                 break;
             case 4:
                 // Opção 4 - Editar Professor
-                // Lógica para editar um professor existente
-                break;
+                scanner.nextLine(); // Limpa o buffer do scanner
+                System.out.println("Digite o ID do professor que deseja editar:");
+                Long idProfessorEditar = scanner.nextLong();
+                scanner.nextLine(); // Consumir a quebra de linha pendente
 
+                System.out.println("Digite o novo nome do professor:");
+                String novoNome = scanner.nextLine();
+
+                System.out.println("Digite o novo assunto do professor:");
+                String novoAssunto = scanner.nextLine();
+
+                Professor professorEditado = controller.editarProfessor(idProfessorEditar, novoNome, novoAssunto);
+
+                if (professorEditado != null) {
+                    System.out.println("Professor editado com sucesso!");
+                } else {
+                    System.out.println("Professor não encontrado.");
+                }
+                break;
             case 5:
                 // Opção 5 - Listar todas as Classes
-                // Lógica para listar todas as classes existentes
-            	// O método já está pronto...só precisa fazer a lógica aqui
+                
+                List<Classe> todasAsClasses = controller.listarTodasAsClasses();
+                if (todasAsClasses.isEmpty()) {
+                    System.out.println("Nenhuma classe encontrada.");
+                } else {
+                    System.out.println("Classes registradas:");
+                    for (Classe classe : todasAsClasses) {
+                        System.out.println("ID: " + classe.getId() + ", Nome: " + classe.getNome());
+                    }
+                }
                 break;
-
-            case 6:
-                // Opção 6 - Excluir Professor
-                // Lógica para excluir um professor existente
-                break;
-
             case 0:
                 // Opção 0 - Sair
                 continuar = false;
